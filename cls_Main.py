@@ -25,8 +25,8 @@ class MissionRobot:
         self.right_attachment = Motor(Port.D)
         
         # Initialize Sensors
-        self.color_sensor = ColorSensor(Port.F)
-        self.color_sensor2 = ColorSensor(Port.E)
+        self.color_sensor = ColorSensor(Port.E)
+        self.distancesensor = UltrasonicSensor(Port.F)
 
         self.heading_pid = PID(kp=2.5, ki=0.02, kd=8)
         self.turn_pid = PID(kp=2.5, ki=0.0, kd=15) 
@@ -122,32 +122,32 @@ class MissionRobot:
         self.right_attachment.reset_angle(0)
         self.right_attachment.run_target(speed, angle,Stop.HOLD, wait)
 
-    # --- SENSOR FUNCTIONS ---
-    def stop_at_black_line(self, sensor_port_motor="line_sensor", speed=200,
-                            black_threshold=15, timeout_ms=5000,mode="either"):
-        """
-        Drives straight until the sensor detects black, then stops.
-        black_threshold: reflection value below this counts as "black".
-                          Calibrate this for your mat (black is usually 0-20).
-        """
-        self.heading_pid.reset()
-        timer = StopWatch()
-        timer.reset()
-        while timer.time() < timeout_ms:
-            reflection_1 = self.color_sensor.reflection()
-            reflection_2 = self.color_sensor2.reflection()
+    # # --- SENSOR FUNCTIONS ---
+    # def stop_at_black_line(self, sensor_port_motor="line_sensor", speed=200,
+    #                         black_threshold=15, timeout_ms=5000,mode="either"):
+    #     """
+    #     Drives straight until the sensor detects black, then stops.
+    #     black_threshold: reflection value below this counts as "black".
+    #                       Calibrate this for your mat (black is usually 0-20).
+    #     """
+    #     self.heading_pid.reset()
+    #     timer = StopWatch()
+    #     timer.reset()
+    #     while timer.time() < timeout_ms:
+    #         reflection_1 = self.color_sensor.reflection()
+    #         reflection_2 = self.color_sensor2.reflection()
 
-            sees_black_1 = reflection_1 <= black_threshold
-            sees_black_2 = reflection_2 <= black_threshold
+    #         sees_black_1 = reflection_1 <= black_threshold
+    #         sees_black_2 = reflection_2 <= black_threshold
 
-            if mode == "either" and (sees_black_1 or sees_black_2):
-                break
-            if mode == "both" and (sees_black_1 and sees_black_2):
-                break
+    #         if mode == "either" and (sees_black_1 or sees_black_2):
+    #             break
+    #         if mode == "both" and (sees_black_1 and sees_black_2):
+    #             break
 
-            heading_error = 0 - self.hub.imu.heading()
-            correction = self.heading_pid.compute(heading_error)
-            self.drive_base.drive(speed, correction)
+    #         heading_error = 0 - self.hub.imu.heading()
+    #         correction = self.heading_pid.compute(heading_error)
+    #         self.drive_base.drive(speed, correction)
 
         # while timer.time() < timeout_ms:
         #     reflection = self.line_sensor.reflection()

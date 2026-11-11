@@ -1,15 +1,17 @@
 from pybricks.tools import hub_menu
-from cls.Main import MissionRobot
+from cls_Main import MissionRobot
 
 robot = MissionRobot()
 
 import exploring_roots
-import Drones
-import exploringseeds
+import drones
+import Katiedid
 
-missions = {"1": opendoor.run, "2": Drones.run, "3": exploringseeds.run , "4": seeds.run}
+missions = {"1": exploring_roots.run, "2": drones.run, "3" : Katiedid.run} 
 
 while True:
-    selected = hub_menu(*missions.keys())
-    missions[selected](robot)
+   selected = hub_menu(*missions.keys())
+   missions[selected](robot)
+
+
 
