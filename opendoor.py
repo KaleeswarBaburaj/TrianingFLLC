@@ -7,6 +7,7 @@ def run(robot):
     robot.gyro_straight(375, speed = 500)
     robot.run_left_attachment(360,500,False)
     robot.gyro_straight(375, speed = -300)
+    #Push this back to my repository in web
     #comment for testing 
     #robot.run_left_attachment(360,500,False)
     #robot.run_right_attachment(-180,600, False)
