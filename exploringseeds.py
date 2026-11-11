@@ -8,6 +8,7 @@ def run(robot):
     robot.gyro_straight(375, speed = 500)
     robot.run_left_attachment(360,500,False)
     robot.gyro_straight(375, speed = -300)
+    robot.stop_all()
     #robot.run_left_attachment(360,500,False)
     #robot.run_right_attachment(-180,600, False)
     # robot.stop_at_black_line(black_threshold=25)
